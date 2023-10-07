@@ -33,7 +33,7 @@ close_button_rect = pygame.Rect(
 # Settings
 audio_on = False
 visual_guide_on = False
-vibration_on = False
+shake_to_move_on = False
 voice_controls_on = False
 game_speed = 5
 
@@ -101,7 +101,7 @@ def show_settings_popup():
     visual_toggle_rect = pygame.Rect(
         0.625 * DISPLAY_W, 0.41 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
     )
-    vibration_toggle_rect = pygame.Rect(
+    shake_to_move_toggle_rect = pygame.Rect(
         0.625 * DISPLAY_W, 0.49 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
     )
     voice_controls_toggle_rect = pygame.Rect(
@@ -111,7 +111,7 @@ def show_settings_popup():
         0.375 * DISPLAY_W, 0.71 * DISPLAY_H, 0.25 * DISPLAY_W, 0.0167 * DISPLAY_H
     )
 
-    global audio_on, visual_guide_on, vibration_on, voice_controls_on, game_speed
+    global audio_on, visual_guide_on, shake_to_move_on, voice_controls_on, game_speed
 
     while True:
         for event in pygame.event.get():
@@ -125,10 +125,12 @@ def show_settings_popup():
                     audio_on = not audio_on
                 if visual_toggle_rect.collidepoint(event.pos):
                     visual_guide_on = not visual_guide_on
-                if vibration_toggle_rect.collidepoint(event.pos):
-                    vibration_on = not vibration_on
+                if shake_to_move_toggle_rect.collidepoint(event.pos):
+                    shake_to_move_on = not shake_to_move_on
+                    voice_controls_on = False
                 if voice_controls_toggle_rect.collidepoint(event.pos):
                     voice_controls_on = not voice_controls_on
+                    shake_to_move_on = False
                 if speed_slider_rect.collidepoint(event.pos):
                     game_speed = int(
                         (event.pos[0] - speed_slider_rect.left)
@@ -152,7 +154,7 @@ def show_settings_popup():
             "Visual Guide", 20, WHITE, settings_popup_rect.x + 50, visual_toggle_rect.y
         )
         draw_text(
-            "Vibration", 20, WHITE, settings_popup_rect.x + 50, vibration_toggle_rect.y
+            "Shake to Move", 20, WHITE, settings_popup_rect.x + 50, shake_to_move_toggle_rect.y
         )
         draw_text(
             "Voice Controls", 20, WHITE, settings_popup_rect.x + 50, voice_controls_toggle_rect.y
@@ -183,13 +185,13 @@ def show_settings_popup():
             visual_toggle_rect.y + 5,
         )
 
-        pygame.draw.rect(screen, WHITE, vibration_toggle_rect)
+        pygame.draw.rect(screen, WHITE, shake_to_move_toggle_rect)
         draw_text(
-            "On" if vibration_on else "Off",
+            "On" if shake_to_move_on else "Off",
             20,
             BLACK,
-            vibration_toggle_rect.x + 5,
-            vibration_toggle_rect.y + 5,
+            shake_to_move_toggle_rect.x + 5,
+            shake_to_move_toggle_rect.y + 5,
         )
 
         pygame.draw.rect(screen, WHITE, voice_controls_toggle_rect)

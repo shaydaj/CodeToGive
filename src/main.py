@@ -50,19 +50,19 @@ def draw_text(text, size, colour, x, y, return_rect=False):
 
 def home_screen():
     background = pygame.image.load("assets/images/background.jpg")
-    start_button_image = pygame.image.load("assets/images/button.png")
-    settings_button_image = pygame.image.load("assets/images/button.png")
+    start_button_image = pygame.image.load("assets/images/startgamebutton.png")
+    settings_button_image = pygame.image.load("assets/images/optionsbutton.png")
 
     start_button_rect = start_button_image.get_rect()
     settings_button_rect = settings_button_image.get_rect()
 
     start_button_rect.topleft = (
         DISPLAY_W / 2 - start_button_rect.width / 2,
-        DISPLAY_H / 2 - 200,
+        DISPLAY_H / 2 - 100,
     )
     settings_button_rect.topleft = (
         DISPLAY_W / 2 - settings_button_rect.width / 2,
-        DISPLAY_H / 2 + 40,
+        DISPLAY_H / 2 ,
     )
 
     while True:
@@ -71,25 +71,13 @@ def home_screen():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if start_button_rect.collidepoint(event.pos):
-                    return
-                elif settings_button_rect.collidepoint(event.pos):
+                if settings_button_rect.collidepoint(event.pos):
                     show_settings_popup()
 
         screen.blit(background, (0, 0))
         screen.blit(start_button_image, start_button_rect)
         screen.blit(settings_button_image, settings_button_rect)
 
-        draw_text(
-            "Start Game", 25, WHITE, start_button_rect.x + 40, start_button_rect.y + 60
-        )
-        draw_text(
-            "Settings",
-            25,
-            WHITE,
-            settings_button_rect.x + 60,
-            settings_button_rect.y + 60,
-        )
 
         pygame.display.update()
 

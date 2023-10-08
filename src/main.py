@@ -18,13 +18,13 @@ pygame.display.set_caption("Game")
 
 # Define relative coordinates based on DISPLAY_W and DISPLAY_H
 settings_popup_border = pygame.Rect(
-    0.25 * DISPLAY_W, 0.25 * DISPLAY_H, 0.5 * DISPLAY_W, 0.6 * DISPLAY_H
+    0.25 * DISPLAY_W, 0.2 * DISPLAY_H, 0.5 * DISPLAY_W, 0.65 * DISPLAY_H
 )
 settings_popup_rect = pygame.Rect(
     0.25 * DISPLAY_W + 5,
-    0.25 * DISPLAY_H + 5,
+    0.2 * DISPLAY_H + 5,
     0.5 * DISPLAY_W - 10,
-    0.6 * DISPLAY_H - 10,
+    0.65 * DISPLAY_H - 10,
 )
 close_button_rect = pygame.Rect(
     0.44 * DISPLAY_W, 0.77 * DISPLAY_H, 0.12 * DISPLAY_W, 0.07 * DISPLAY_H
@@ -35,6 +35,7 @@ audio_on = False
 visual_guide_on = False
 shake_to_move_on = False
 voice_controls_on = False
+simple_background_on = False
 game_speed = 5
 
 slider_dragging = False
@@ -168,22 +169,25 @@ def show_settings_popup():
     global slider_dragging
 
     audio_toggle_rect = pygame.Rect(
-        0.625 * DISPLAY_W, 0.33 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
+        0.625 * DISPLAY_W, 0.25 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
     )
     visual_toggle_rect = pygame.Rect(
-        0.625 * DISPLAY_W, 0.41 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
+        0.625 * DISPLAY_W, 0.33 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
     )
     shake_to_move_toggle_rect = pygame.Rect(
-        0.625 * DISPLAY_W, 0.49 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
+        0.625 * DISPLAY_W, 0.41 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
     )
     voice_controls_toggle_rect = pygame.Rect(
+        0.625 * DISPLAY_W, 0.49 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
+    )
+    simple_background_toggle_rect = pygame.Rect(
         0.625 * DISPLAY_W, 0.57 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
     )
     speed_slider_rect = pygame.Rect(
-        0.375 * DISPLAY_W, 0.71 * DISPLAY_H, 0.25 * DISPLAY_W, 0.0167 * DISPLAY_H
+        0.375 * DISPLAY_W, 0.72 * DISPLAY_H, 0.25 * DISPLAY_W, 0.0167 * DISPLAY_H
     )
 
-    global audio_on, visual_guide_on, shake_to_move_on, voice_controls_on, game_speed
+    global audio_on, visual_guide_on, shake_to_move_on, voice_controls_on, simple_background_on, game_speed
 
     while True:
         for event in pygame.event.get():
@@ -203,6 +207,8 @@ def show_settings_popup():
                 if voice_controls_toggle_rect.collidepoint(event.pos):
                     voice_controls_on = not voice_controls_on
                     shake_to_move_on = False
+                if simple_background_toggle_rect.collidepoint(event.pos):
+                    simple_background_on = not simple_background_on
                 if speed_slider_rect.collidepoint(event.pos):
                     slider_dragging = True  # Start dragging the slider
             if event.type == pygame.MOUSEBUTTONUP:
@@ -222,16 +228,19 @@ def show_settings_popup():
         )
 
         draw_text(
-            "Audio Prompts", 20, WHITE, settings_popup_rect.x + 50, audio_toggle_rect.y
+            "Audio Prompts", 18, WHITE, settings_popup_rect.x + 50, audio_toggle_rect.y
         )
         draw_text(
-            "Visual Guide", 20, WHITE, settings_popup_rect.x + 50, visual_toggle_rect.y
+            "Visual Guide", 18, WHITE, settings_popup_rect.x + 50, visual_toggle_rect.y
         )
         draw_text(
-            "Shake to Move", 20, WHITE, settings_popup_rect.x + 50, shake_to_move_toggle_rect.y
+            "Shake to Move", 18, WHITE, settings_popup_rect.x + 50, shake_to_move_toggle_rect.y
         )
         draw_text(
-            "Voice Controls", 20, WHITE, settings_popup_rect.x + 50, voice_controls_toggle_rect.y
+            "Voice Controls", 18, WHITE, settings_popup_rect.x + 50, voice_controls_toggle_rect.y
+        )
+        draw_text(
+            "Simple Backgroud", 18, WHITE, settings_popup_rect.x + 50, simple_background_toggle_rect.y
         )
         draw_text(
             "Game Speed",
@@ -275,6 +284,15 @@ def show_settings_popup():
             BLACK,
             voice_controls_toggle_rect.x + 5,
             voice_controls_toggle_rect.y + 5,
+        )
+
+        pygame.draw.rect(screen, WHITE, simple_background_toggle_rect)
+        draw_text(
+            "On" if simple_background_on else "Off",
+            20,
+            BLACK,
+            simple_background_toggle_rect.x + 5,
+            simple_background_toggle_rect.y + 5,
         )
 
         pygame.draw.rect(screen, WHITE, speed_slider_rect)

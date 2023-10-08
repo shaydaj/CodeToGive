@@ -9,12 +9,10 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 960, 720
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 WHITE = (255, 255, 255)
 
-background_image = pygame.image.load("assets/images/endingbackground.jpg")
+background_image = pygame.image.load("src/assets/images/endingbackground.jpg")
 background_image = pygame.transform.scale(
     background_image, (SCREEN_WIDTH, SCREEN_HEIGHT)
 )
-
-# Load other images and set up rectangles as you did before...
 
 banana_image = pygame.image.load('assets/images/Individual Banana.png')
 banana_image = pygame.transform.scale(banana_image, (40, 40))
@@ -37,6 +35,7 @@ background_image = pygame.transform.scale(
 
 gameover = pygame.image.load("assets/images/gameover.png")
 gameoverimage = pygame.transform.scale(gameover, (700, 175))
+
 gameover_rect = gameoverimage.get_rect(
     center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 100)
 )

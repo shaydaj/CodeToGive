@@ -6,17 +6,26 @@ from pygame.locals import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, type):
         super().__init__()
-        player_walk_1 = scalePlayer("assets/images/gorilla-1.png")
-        player_walk_2 = scalePlayer("assets/images/gorilla-2.png")
+
+        paths = {
+            1: ("src/assets/images/gorilla-1.png", "src/assets/images/gorilla-2.png"),
+            2: ("src/assets/images/rabbit_sticker_left.png", "src/assets/images/rabbit_sticker_right.png"),
+            3: ("src/assets/images/cat_sticker_left.png", "src/assets/images/cat_sticker_right.png"),
+            4: ("src/assets/images/duck_sticker_left.png", "src/assets/images/duck_sticker_right.png"),
+        }
+
+        self.count = 0
+        player_walk_1 = scalePlayer(paths[type][0])
+        player_walk_2 = scalePlayer(paths[type][1])
 
         self.player_walk = [player_walk_1, player_walk_2]
         self.player_index = 0
-        self.player_jump = scalePlayer("assets/images/gorilla-1.png")
+        self.player_jump = scalePlayer(paths[type][0])
 
         self.image = self.player_walk[self.player_index]
-        self.rect = self.image.get_rect(midbottom=(550, 300))
+        self.rect = self.image.get_rect(midbottom=(550, 500))
         self.gravity = 0
 
     def player_input(self):
@@ -44,25 +53,31 @@ class Player(pygame.sprite.Sprite):
         self.player_input()
         self.apply_gravity()
         self.animation_state()
+    
+    def get_banana_count(self):
+        return self.count
+
+    def add_banana_count(self):
+        self.count += 1
 
 
 class Food(pygame.sprite.Sprite):
     def __init__(self, foodtype):
         super().__init__()
         if foodtype == 1:
-            banana_1 = scaleFood("assets/images/banana.png")
+            banana_1 = scaleFood("src/assets/images/banana.png")
             self.image = banana_1
 
         elif foodtype == 2:
-            banana_2 = scaleFood("assets/images/banana.png")
+            banana_2 = scaleFood("src/assets/images/banana.png")
             self.image = banana_2
 
         elif foodtype == 3:
-            banana_3 = scaleFood("assets/images/banana.png")
+            banana_3 = scaleFood("src/assets/images/banana.png")
             self.image = banana_3
 
         elif foodtype == 4:
-            banana_4 = scaleFood("assets/images/banana.png")
+            banana_4 = scaleFood("src/assets/images/banana.png")
             self.image = banana_4
 
         y_pos = 10
@@ -73,7 +88,7 @@ class Food(pygame.sprite.Sprite):
         self.destroy()
 
     def destroy(self):
-        if self.rect.y >= 500:
+        if self.rect.y >= 720:
             self.kill()
 
 
@@ -101,17 +116,17 @@ width = 960
 height = 720
 
 
-def game_running(PAUSE_NEED, x, screen, sound):
+def game_running(PAUSE_NEED, x, screen, sound, type):
     GAME_SPEED = x
     PAUSE = 0
     if PAUSE_NEED:
         PAUSE = 2
     window = pygame.display.set_mode((width, height))
-    bg_img = pygame.image.load("assets/images/tower.png")
+    bg_img = pygame.image.load("src/assets/images/tower.png")
     bg_img = pygame.transform.scale(bg_img, (int(width // 2), height))
     beautiful_bg = [
-        "assets/images/Daylight skyline.png",
-        "assets/images/ny night 3.png",
+        "src/assets/images/Daylight skyline.png",
+        "src/assets/images/ny night 3.png",
     ]
     if not screen:
         bg_img1 = pygame.image.load(random.choice(beautiful_bg))
@@ -121,15 +136,16 @@ def game_running(PAUSE_NEED, x, screen, sound):
     game_width = int(width // 2)
     i = 0
 
+    character = Player(type)
     player = pygame.sprite.GroupSingle()
-    player.add(Player())
+    player.add(character)
 
     food_group = pygame.sprite.Group()
 
     food_timer = pygame.USEREVENT + 1
     running = True
 
-    pygame.mixer.music.load("assets/audios/chill.mp3")
+    pygame.mixer.music.load("src/assets/audios/chill.mp3")
 
     if sound:
         pygame.mixer.music.play(-1)
@@ -169,6 +185,15 @@ def game_running(PAUSE_NEED, x, screen, sound):
 
             if collision_sprite(player, food_group):
                 food_group.remove(food_group.sprites()[0])
+                character.add_banana_count()
+
+            banana_img = pygame.image.load("src/assets/images/banana.png")
+            banana_img = pygame.transform.scale(banana_img, (150, 100))  # Adjust the size as needed
+            window.blit(banana_img, (0, 0))  # Display banana at (10, 10)
+            font = pygame.font.Font('src/assets/fonts/8-BIT WONDER.TTF', 36)
+            count_text = font.render(str(character.get_banana_count()), True, (76, 187, 23))
+            window.blit(count_text, (120, 40)) 
+
             player.draw(window)
             player.update()
 

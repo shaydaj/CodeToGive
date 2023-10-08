@@ -10,7 +10,7 @@ DISPLAY_H = 720
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREY = (211, 211, 211)
-font = pygame.font.Font("assets/fonts/8-BIT WONDER.TTF", 30)
+font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", 30)
 
 # Set up display
 screen = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
@@ -42,13 +42,13 @@ slider_dragging = False
 
 
 def display_title():
-    title_image = pygame.image.load("assets/images/gametitle.png")  # Replace "path/to/your/title.png" with the actual file path
+    title_image = pygame.image.load("src/assets/images/gametitle.png")  # Replace "path/to/your/title.png" with the actual file path
     scaled_title_image = pygame.transform.scale(title_image, (600, 225))
     title_rect = scaled_title_image.get_rect(center=(DISPLAY_W // 2, 275))  # Adjust the y-coordinate (here 30) for vertical positioning
     screen.blit(scaled_title_image, title_rect)
 
 def draw_text(text, size, colour, x, y, return_rect=False):
-    font = pygame.font.Font("assets/fonts/8-BIT WONDER.TTF", size)
+    font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", size)
     textobj = font.render(text, 1, colour)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
@@ -58,9 +58,9 @@ def draw_text(text, size, colour, x, y, return_rect=False):
 
 
 def home_screen():
-    background = pygame.image.load("assets/images/background2.jpg")
-    start_button_image = pygame.image.load("assets/images/startgamebutton.png")
-    settings_button_image = pygame.image.load("assets/images/optionsbutton.png")
+    background = pygame.image.load("src/assets/images/background2.jpg")
+    start_button_image = pygame.image.load("src/assets/images/startgamebutton.png")
+    settings_button_image = pygame.image.load("src/assets/images/optionsbutton.png")
     BUTTON_WIDTH = 250
     BUTTON_HEIGHT = 100
 

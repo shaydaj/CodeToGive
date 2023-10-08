@@ -8,6 +8,8 @@ from pygame.locals import *
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+
+        self.count = 0
         player_walk_1 = scalePlayer("src/assets/images/gorilla-1.png")
         player_walk_2 = scalePlayer("src/assets/images/gorilla-2.png")
 
@@ -16,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.player_jump = scalePlayer("src/assets/images/gorilla-1.png")
 
         self.image = self.player_walk[self.player_index]
-        self.rect = self.image.get_rect(midbottom=(550, 300))
+        self.rect = self.image.get_rect(midbottom=(550, 500))
         self.gravity = 0
 
     def player_input(self):
@@ -44,6 +46,12 @@ class Player(pygame.sprite.Sprite):
         self.player_input()
         self.apply_gravity()
         self.animation_state()
+    
+    def get_banana_count(self):
+        return self.count
+
+    def add_banana_count(self):
+        self.count += 1
 
 
 class Food(pygame.sprite.Sprite):
@@ -118,8 +126,9 @@ def game_running(PAUSE_NEED, x):
     game_width = int(width // 2)
     i = 0
 
+    character = Player()
     player = pygame.sprite.GroupSingle()
-    player.add(Player())
+    player.add(character)
 
     food_group = pygame.sprite.Group()
 
@@ -165,6 +174,15 @@ def game_running(PAUSE_NEED, x):
 
             if collision_sprite(player, food_group):
                 food_group.remove(food_group.sprites()[0])
+                character.add_banana_count()
+
+            banana_img = pygame.image.load("src/assets/images/banana.png")
+            banana_img = pygame.transform.scale(banana_img, (150, 100))  # Adjust the size as needed
+            window.blit(banana_img, (0, 0))  # Display banana at (10, 10)
+            font = pygame.font.Font('src/assets/fonts/8-BIT WONDER.TTF', 36)
+            count_text = font.render(str(character.get_banana_count()), True, (76, 187, 23))
+            window.blit(count_text, (120, 40)) 
+
             player.draw(window)
             player.update()
 

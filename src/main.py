@@ -74,6 +74,9 @@ def home_screen():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if settings_button_rect.collidepoint(event.pos):
                     show_settings_popup()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if start_button_rect.collidepoint(event.pos):
+                    return
 
         screen.blit(background, (0, 0))
         screen.blit(start_button_image, start_button_rect)

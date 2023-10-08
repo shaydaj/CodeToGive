@@ -10,7 +10,7 @@ DISPLAY_H = 720
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREY = (211, 211, 211)
-font = pygame.font.Font("assets/fonts/8-BIT WONDER.TTF", 30)
+font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", 30)
 
 # Set up display
 screen = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
@@ -40,7 +40,7 @@ game_speed = 5
 slider_dragging = False
 
 def draw_text(text, size, colour, x, y, return_rect=False):
-    font = pygame.font.Font("assets/fonts/8-BIT WONDER.TTF", size)
+    font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", size)
     textobj = font.render(text, 1, colour)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
@@ -50,9 +50,9 @@ def draw_text(text, size, colour, x, y, return_rect=False):
 
 
 def home_screen():
-    background = pygame.image.load("assets/images/background2.jpg")
-    start_button_image = pygame.image.load("assets/images/startgamebutton.png")
-    settings_button_image = pygame.image.load("assets/images/optionsbutton.png")
+    background = pygame.image.load("src/assets/images/background2.jpg")
+    start_button_image = pygame.image.load("src/assets/images/startgamebutton.png")
+    settings_button_image = pygame.image.load("src/assets/images/optionsbutton.png")
 
     start_button_rect = start_button_image.get_rect()
     settings_button_rect = settings_button_image.get_rect()

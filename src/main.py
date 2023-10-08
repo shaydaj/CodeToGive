@@ -175,23 +175,23 @@ def character_selection_popup():
         pygame.draw.rect(screen, WHITE, character_popup_border)
         pygame.draw.rect(screen, PINK, character_popup_rect)
 
-        select_character_image = pygame.image.load('src/assets/images/players.jpeg')
+        select_character_image = pygame.image.load('assets/images/players.jpeg')
 
         screen.blit(select_character_image, (character_popup_rect.x + 120, character_popup_rect.y + 20))
 
-        gorilla_image = pygame.image.load('src/assets/images/gorilla.png')
+        gorilla_image = pygame.image.load('assets/images/gorilla.png')
         gorilla_image = pygame.transform.scale(gorilla_image, (200, 200))
         screen.blit(gorilla_image, (gorilla_button_rect.x, gorilla_button_rect.y))
 
-        rabbit_image = pygame.image.load('src/assets/images/rabbit.png')
+        rabbit_image = pygame.image.load('assets/images/rabbit.png')
         rabbit_image = pygame.transform.scale(rabbit_image, (450, 200))
         screen.blit(rabbit_image, (rabbit_button_rect.x, rabbit_button_rect.y))
 
-        cat_image = pygame.image.load('src/assets/images/cat.png')
+        cat_image = pygame.image.load('assets/images/cat.png')
         cat_image = pygame.transform.scale(cat_image, (350, 250))
         screen.blit(cat_image, (cat_button_rect.x, cat_button_rect.y))
 
-        duck_image = pygame.image.load('src/assets/images/duck.png')
+        duck_image = pygame.image.load('assets/images/duck.png')
         duck_image = pygame.transform.scale(duck_image, (350, 200))
         screen.blit(duck_image, (duck_button_rect.x, duck_button_rect.y))
 

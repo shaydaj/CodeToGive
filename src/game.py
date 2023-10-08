@@ -101,7 +101,7 @@ width = 960
 height = 720
 
 
-def game_running(PAUSE_NEED, x):
+def game_running(PAUSE_NEED, x, screen, sound):
     GAME_SPEED = x
     PAUSE = 0
     if PAUSE_NEED:
@@ -113,7 +113,10 @@ def game_running(PAUSE_NEED, x):
         "assets/images/Daylight skyline.png",
         "assets/images/ny night 3.png",
     ]
-    bg_img1 = pygame.image.load(random.choice(beautiful_bg))
+    if not screen:
+        bg_img1 = pygame.image.load(random.choice(beautiful_bg))
+    else:
+        bg_img1 = pygame.image.load("src/assets/images/white_screen.jpg")
     bg_img1 = pygame.transform.scale(bg_img1, (int(width // 2), height))
     game_width = int(width // 2)
     i = 0
@@ -128,7 +131,8 @@ def game_running(PAUSE_NEED, x):
 
     pygame.mixer.music.load("assets/audios/chill.mp3")
 
-    pygame.mixer.music.play(-1)
+    if sound:
+        pygame.mixer.music.play(-1)
     pygame.time.set_timer(food_timer, int(10000 // (GAME_SPEED + 1)))
     clock = pygame.time.Clock()
     active = True

@@ -362,7 +362,7 @@ def game_screen(character):
 
 def main():
     character = home_screen()
-    game.game_running(visual_guide_on, game_speed)
+    game.game_running(visual_guide_on, game_speed, simple_background_on, voice_controls_on)
 
 
 if __name__ == "__main__":

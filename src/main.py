@@ -11,11 +11,13 @@ DISPLAY_H = 720
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREY = (211, 211, 211)
+PINK = (235,84,76)
+
 font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", 30)
 
 # Set up display
 screen = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
-pygame.display.set_caption("Game")
+pygame.display.set_caption("Concrete Jungle, Climbing Challenge")
 
 # Define relative coordinates based on DISPLAY_W and DISPLAY_H
 settings_popup_border = pygame.Rect(
@@ -104,26 +106,41 @@ def home_screen():
 def character_selection_popup():
 
     character_popup_border = pygame.Rect(
-        0.25 * DISPLAY_W, 0.25 * DISPLAY_H, 0.5 * DISPLAY_W, 0.6 * DISPLAY_H
+        0.2 * DISPLAY_W, 
+        0.15 * DISPLAY_H,
+        0.6 * DISPLAY_W, 
+        0.8 * DISPLAY_H
     )
     character_popup_rect = pygame.Rect(
-        0.25 * DISPLAY_W + 5,
-        0.25 * DISPLAY_H + 5,
-        0.5 * DISPLAY_W - 10,
-        0.6 * DISPLAY_H - 10,
+        0.2 * DISPLAY_W + 5,
+        0.15 * DISPLAY_H + 5,
+        0.6 * DISPLAY_W - 10,
+        0.8 * DISPLAY_H - 10,
     )
 
-    monkey_button_rect = pygame.Rect(
+    gorilla_button_rect = pygame.Rect(
             0.3 * DISPLAY_W,
-            0.4 * DISPLAY_H,
-            0.2 * DISPLAY_W,
-            0.1 * DISPLAY_H
+            0.37 * DISPLAY_H,
+            0.25 * DISPLAY_W,
+            0.25 * DISPLAY_H  
         )
     rabbit_button_rect = pygame.Rect(
-            0.3 * DISPLAY_W,
-            0.6 * DISPLAY_H,
-            0.2 * DISPLAY_W,
-            0.1 * DISPLAY_H
+            0.17 * DISPLAY_W,
+            0.63 * DISPLAY_H,  
+            0.25 * DISPLAY_W,
+            0.25 * DISPLAY_H  
+        )
+    cat_button_rect = pygame.Rect(
+            0.45 * DISPLAY_W,  
+            0.38 * DISPLAY_H,
+            0.25 * DISPLAY_W,
+            0.25 * DISPLAY_H 
+        )
+    duck_button_rect = pygame.Rect(
+            0.45 * DISPLAY_W,  
+            0.65 * DISPLAY_H,  
+            0.25 * DISPLAY_W,
+            0.25 * DISPLAY_H 
         )
     
     selected_character = None
@@ -135,46 +152,43 @@ def character_selection_popup():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
     
-                if monkey_button_rect.collidepoint(event.pos):
+                if gorilla_button_rect.collidepoint(event.pos):
                     selected_character = 1
                 elif rabbit_button_rect.collidepoint(event.pos):
                     selected_character = 2
+                elif cat_button_rect.collidepoint(event.pos):  # Added cat button event
+                    selected_character = 3
+                elif duck_button_rect.collidepoint(event.pos):  # Added duck button event
+                    selected_character = 4
 
         if selected_character is not None:
             return selected_character
 
         pygame.draw.rect(screen, WHITE, character_popup_border)
-        pygame.draw.rect(screen, BLACK, character_popup_rect)
+        pygame.draw.rect(screen, PINK, character_popup_rect)
 
-        draw_text(
-            "Select Character",
-            28,
-            WHITE,
-            character_popup_rect.x + 25,
-            character_popup_rect.y + 20
-        )
+        select_character_image = pygame.image.load('src/assets/images/players.jpeg')
 
-        pygame.draw.rect(screen, WHITE, monkey_button_rect)
-        draw_text(
-            "Monkey",
-            20,
-            BLACK,
-            monkey_button_rect.x + 25,
-            monkey_button_rect.y + 20
-        )
+        screen.blit(select_character_image, (character_popup_rect.x + 120, character_popup_rect.y + 20))
 
-        pygame.draw.rect(screen, WHITE, rabbit_button_rect)
-        draw_text(
-            "Rabbit",
-            20,
-            BLACK,
-            rabbit_button_rect.x + 40,
-            rabbit_button_rect.y + 20
-        )
+        gorilla_image = pygame.image.load('src/assets/images/gorilla.png')
+        gorilla_image = pygame.transform.scale(gorilla_image, (200, 200))
+        screen.blit(gorilla_image, (gorilla_button_rect.x, gorilla_button_rect.y))
 
+        rabbit_image = pygame.image.load('src/assets/images/rabbit.png')
+        rabbit_image = pygame.transform.scale(rabbit_image, (450, 200))
+        screen.blit(rabbit_image, (rabbit_button_rect.x, rabbit_button_rect.y))
 
+        cat_image = pygame.image.load('src/assets/images/cat.png')
+        cat_image = pygame.transform.scale(cat_image, (350, 250))
+        screen.blit(cat_image, (cat_button_rect.x, cat_button_rect.y))
+
+        duck_image = pygame.image.load('src/assets/images/duck.png')
+        duck_image = pygame.transform.scale(duck_image, (350, 200))
+        screen.blit(duck_image, (duck_button_rect.x, duck_button_rect.y))
 
         pygame.display.update()
+
 
 
 

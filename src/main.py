@@ -11,11 +11,13 @@ DISPLAY_H = 720
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREY = (211, 211, 211)
+PINK = (235,84,76)
+
 font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", 30)
 
 # Set up display
 screen = pygame.display.set_mode((DISPLAY_W, DISPLAY_H))
-pygame.display.set_caption("Game")
+pygame.display.set_caption("Concrete Jungle, Climbing Challenge")
 
 # Define relative coordinates based on DISPLAY_W and DISPLAY_H
 settings_popup_border = pygame.Rect(
@@ -43,15 +45,10 @@ slider_dragging = False
 
 
 def display_title():
-    title_image = pygame.image.load(
-        "src/assets/images/gametitle.png"
-    )  # Replace "path/to/your/title.png" with the actual file path
+    title_image = pygame.image.load("src/assets/images/gametitle.png")  # Replace "path/to/your/title.png" with the actual file path
     scaled_title_image = pygame.transform.scale(title_image, (600, 225))
-    title_rect = scaled_title_image.get_rect(
-        center=(DISPLAY_W // 2, 275)
-    )  # Adjust the y-coordinate (here 30) for vertical positioning
+    title_rect = scaled_title_image.get_rect(center=(DISPLAY_W // 2, 275))  # Adjust the y-coordinate (here 30) for vertical positioning
     screen.blit(scaled_title_image, title_rect)
-
 
 def draw_text(text, size, colour, x, y, return_rect=False):
     font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", size)
@@ -70,12 +67,8 @@ def home_screen():
     BUTTON_WIDTH = 250
     BUTTON_HEIGHT = 100
 
-    start_button_image = pygame.transform.scale(
-        start_button_image, (BUTTON_WIDTH, BUTTON_HEIGHT)
-    )
-    settings_button_image = pygame.transform.scale(
-        settings_button_image, (BUTTON_WIDTH, BUTTON_HEIGHT)
-    )
+    start_button_image = pygame.transform.scale(start_button_image, (BUTTON_WIDTH, BUTTON_HEIGHT))
+    settings_button_image = pygame.transform.scale(settings_button_image, (BUTTON_WIDTH, BUTTON_HEIGHT))
 
     start_button_rect = start_button_image.get_rect()
     settings_button_rect = settings_button_image.get_rect()
@@ -98,36 +91,58 @@ def home_screen():
                 if settings_button_rect.collidepoint(event.pos):
                     show_settings_popup()
                 if start_button_rect.collidepoint(event.pos):
-                    selected_character = character_selection_popup()
-                    if selected_character is not None:
-                        return selected_character
+                        selected_character = character_selection_popup()
+                        if selected_character is not None:
+                            return selected_character
 
         screen.blit(background, (0, 0))
         screen.blit(start_button_image, start_button_rect)
         screen.blit(settings_button_image, settings_button_rect)
         display_title()
 
+
         pygame.display.update()
 
-
 def character_selection_popup():
+
     character_popup_border = pygame.Rect(
-        0.25 * DISPLAY_W, 0.25 * DISPLAY_H, 0.5 * DISPLAY_W, 0.6 * DISPLAY_H
+        0.2 * DISPLAY_W, 
+        0.15 * DISPLAY_H,
+        0.6 * DISPLAY_W, 
+        0.8 * DISPLAY_H
     )
     character_popup_rect = pygame.Rect(
-        0.25 * DISPLAY_W + 5,
-        0.25 * DISPLAY_H + 5,
-        0.5 * DISPLAY_W - 10,
-        0.6 * DISPLAY_H - 10,
+        0.2 * DISPLAY_W + 5,
+        0.15 * DISPLAY_H + 5,
+        0.6 * DISPLAY_W - 10,
+        0.8 * DISPLAY_H - 10,
     )
 
-    monkey_button_rect = pygame.Rect(
-        0.3 * DISPLAY_W, 0.4 * DISPLAY_H, 0.2 * DISPLAY_W, 0.1 * DISPLAY_H
-    )
+    gorilla_button_rect = pygame.Rect(
+            0.3 * DISPLAY_W,
+            0.37 * DISPLAY_H,
+            0.25 * DISPLAY_W,
+            0.25 * DISPLAY_H  
+        )
     rabbit_button_rect = pygame.Rect(
-        0.3 * DISPLAY_W, 0.6 * DISPLAY_H, 0.2 * DISPLAY_W, 0.1 * DISPLAY_H
-    )
-
+            0.17 * DISPLAY_W,
+            0.63 * DISPLAY_H,  
+            0.25 * DISPLAY_W,
+            0.25 * DISPLAY_H  
+        )
+    cat_button_rect = pygame.Rect(
+            0.45 * DISPLAY_W,  
+            0.38 * DISPLAY_H,
+            0.25 * DISPLAY_W,
+            0.25 * DISPLAY_H 
+        )
+    duck_button_rect = pygame.Rect(
+            0.45 * DISPLAY_W,  
+            0.65 * DISPLAY_H,  
+            0.25 * DISPLAY_W,
+            0.25 * DISPLAY_H 
+        )
+    
     selected_character = None
 
     while True:
@@ -136,36 +151,46 @@ def character_selection_popup():
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if monkey_button_rect.collidepoint(event.pos):
+    
+                if gorilla_button_rect.collidepoint(event.pos):
                     selected_character = 1
                 elif rabbit_button_rect.collidepoint(event.pos):
                     selected_character = 2
+                elif cat_button_rect.collidepoint(event.pos):  # Added cat button event
+                    selected_character = 3
+                elif duck_button_rect.collidepoint(event.pos):  # Added duck button event
+                    selected_character = 4
 
         if selected_character is not None:
             return selected_character
 
         pygame.draw.rect(screen, WHITE, character_popup_border)
-        pygame.draw.rect(screen, BLACK, character_popup_rect)
+        pygame.draw.rect(screen, PINK, character_popup_rect)
 
-        draw_text(
-            "Select Character",
-            28,
-            WHITE,
-            character_popup_rect.x + 25,
-            character_popup_rect.y + 20,
-        )
+        select_character_image = pygame.image.load('src/assets/images/players.jpeg')
 
-        pygame.draw.rect(screen, WHITE, monkey_button_rect)
-        draw_text(
-            "Monkey", 20, BLACK, monkey_button_rect.x + 25, monkey_button_rect.y + 20
-        )
+        screen.blit(select_character_image, (character_popup_rect.x + 120, character_popup_rect.y + 20))
 
-        pygame.draw.rect(screen, WHITE, rabbit_button_rect)
-        draw_text(
-            "Rabbit", 20, BLACK, rabbit_button_rect.x + 40, rabbit_button_rect.y + 20
-        )
+        gorilla_image = pygame.image.load('src/assets/images/gorilla.png')
+        gorilla_image = pygame.transform.scale(gorilla_image, (200, 200))
+        screen.blit(gorilla_image, (gorilla_button_rect.x, gorilla_button_rect.y))
+
+        rabbit_image = pygame.image.load('src/assets/images/rabbit.png')
+        rabbit_image = pygame.transform.scale(rabbit_image, (450, 200))
+        screen.blit(rabbit_image, (rabbit_button_rect.x, rabbit_button_rect.y))
+
+        cat_image = pygame.image.load('src/assets/images/cat.png')
+        cat_image = pygame.transform.scale(cat_image, (350, 250))
+        screen.blit(cat_image, (cat_button_rect.x, cat_button_rect.y))
+
+        duck_image = pygame.image.load('src/assets/images/duck.png')
+        duck_image = pygame.transform.scale(duck_image, (350, 200))
+        screen.blit(duck_image, (duck_button_rect.x, duck_button_rect.y))
 
         pygame.display.update()
+
+
+
 
 
 def show_settings_popup():
@@ -219,11 +244,7 @@ def show_settings_popup():
             if event.type == pygame.MOUSEMOTION:
                 if slider_dragging:
                     # Update game speed based on mouse position
-                    game_speed = (
-                        (event.pos[0] - speed_slider_rect.left)
-                        / (speed_slider_rect.width - 10)
-                        * 10
-                    )
+                    game_speed = (event.pos[0] - speed_slider_rect.left) / (speed_slider_rect.width - 10) * 10
                     game_speed = min(max(game_speed, 0), 10)
 
         pygame.draw.rect(screen, WHITE, settings_popup_border)
@@ -241,25 +262,13 @@ def show_settings_popup():
             "Visual Guide", 18, WHITE, settings_popup_rect.x + 50, visual_toggle_rect.y
         )
         draw_text(
-            "Shake to Move",
-            18,
-            WHITE,
-            settings_popup_rect.x + 50,
-            shake_to_move_toggle_rect.y,
+            "Shake to Move", 18, WHITE, settings_popup_rect.x + 50, shake_to_move_toggle_rect.y
         )
         draw_text(
-            "Voice Controls",
-            18,
-            WHITE,
-            settings_popup_rect.x + 50,
-            voice_controls_toggle_rect.y,
+            "Voice Controls", 18, WHITE, settings_popup_rect.x + 50, voice_controls_toggle_rect.y
         )
         draw_text(
-            "Simple Backgroud",
-            18,
-            WHITE,
-            settings_popup_rect.x + 50,
-            simple_background_toggle_rect.y,
+            "Simple Backgroud", 18, WHITE, settings_popup_rect.x + 50, simple_background_toggle_rect.y
         )
         draw_text(
             "Game Speed",
@@ -338,13 +347,7 @@ def game_screen(character):
 
         screen.fill(WHITE)
 
-        draw_text(
-            f"Selected Character {character}",
-            30,
-            BLACK,
-            DISPLAY_W // 2 - 300,
-            DISPLAY_H // 2,
-        )
+        draw_text(f"Selected Character {character}", 30, BLACK, DISPLAY_W//2 - 300, DISPLAY_H//2)
 
         pygame.display.update()
 

@@ -37,6 +37,7 @@ shake_to_move_on = False
 voice_controls_on = False
 game_speed = 5
 
+slider_dragging = False
 
 def draw_text(text, size, colour, x, y, return_rect=False):
     font = pygame.font.Font("assets/fonts/8-BIT WONDER.TTF", size)
@@ -83,6 +84,8 @@ def home_screen():
 
 
 def show_settings_popup():
+    global slider_dragging
+
     audio_toggle_rect = pygame.Rect(
         0.625 * DISPLAY_W, 0.33 * DISPLAY_H, 0.07 * DISPLAY_W, 0.04 * DISPLAY_H
     )
@@ -120,11 +123,13 @@ def show_settings_popup():
                     voice_controls_on = not voice_controls_on
                     shake_to_move_on = False
                 if speed_slider_rect.collidepoint(event.pos):
-                    game_speed = int(
-                        (event.pos[0] - speed_slider_rect.left)
-                        / (speed_slider_rect.width - 10)
-                        * 10
-                    )
+                    slider_dragging = True  # Start dragging the slider
+            if event.type == pygame.MOUSEBUTTONUP:
+                slider_dragging = False  # Stop dragging the slider
+            if event.type == pygame.MOUSEMOTION:
+                if slider_dragging:
+                    # Update game speed based on mouse position
+                    game_speed = (event.pos[0] - speed_slider_rect.left) / (speed_slider_rect.width - 10) * 10
                     game_speed = min(max(game_speed, 0), 10)
 
         pygame.draw.rect(screen, WHITE, settings_popup_border)
@@ -196,7 +201,7 @@ def show_settings_popup():
             game_speed / 10 * (speed_slider_rect.width)
         )
         slider_handle_rect = pygame.Rect(
-            slider_handle_x, speed_slider_rect.top - 5, 10, 25
+            slider_handle_x, speed_slider_rect.top - 5, 15, 25
         )
         pygame.draw.rect(screen, GREY, slider_handle_rect)
 

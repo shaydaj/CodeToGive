@@ -1,5 +1,6 @@
 import pygame
 import sys
+import game
 
 # Initialize Pygame
 pygame.init()
@@ -339,7 +340,7 @@ def game_screen(character):
 
 def main():
     character = home_screen()
-    game_screen(character)
+    game.game_running(visual_guide_on, game_speed)
 
 
 if __name__ == "__main__":

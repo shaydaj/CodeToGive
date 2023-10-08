@@ -49,7 +49,7 @@ def draw_text(text, size, colour, x, y, return_rect=False):
 
 
 def home_screen():
-    background = pygame.image.load("assets/images/background.jpg")
+    background = pygame.image.load("assets/images/background2.jpg")
     start_button_image = pygame.image.load("assets/images/startgamebutton.png")
     settings_button_image = pygame.image.load("assets/images/optionsbutton.png")
 

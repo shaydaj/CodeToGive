@@ -6,17 +6,23 @@ from pygame.locals import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, type):
         super().__init__()
 
+        paths = {
+            1: ("src/assets/images/gorilla-1.png", "src/assets/images/gorilla-2.png"),
+            2: ("src/assets/images/rabbit_sticker_left.png", "src/assets/images/rabbit_sticker_right.png"),
+            3: ("src/assets/images/cat_sticker_left.png", "src/assets/images/cat_sticker_right.png"),
+            4: ("src/assets/images/duck_sticker_left.png", "src/assets/images/duck_sticker_right.png"),
+        }
 
         self.count = 0
-        player_walk_1 = scalePlayer("src/assets/images/gorilla-1.png")
-        player_walk_2 = scalePlayer("src/assets/images/gorilla-2.png")
+        player_walk_1 = scalePlayer(paths[type][0])
+        player_walk_2 = scalePlayer(paths[type][1])
 
         self.player_walk = [player_walk_1, player_walk_2]
         self.player_index = 0
-        self.player_jump = scalePlayer("src/assets/images/gorilla-1.png")
+        self.player_jump = scalePlayer(paths[type][0])
 
         self.image = self.player_walk[self.player_index]
         self.rect = self.image.get_rect(midbottom=(550, 500))
@@ -82,7 +88,7 @@ class Food(pygame.sprite.Sprite):
         self.destroy()
 
     def destroy(self):
-        if self.rect.y >= 500:
+        if self.rect.y >= 720:
             self.kill()
 
 
@@ -110,7 +116,7 @@ width = 960
 height = 720
 
 
-def game_running(PAUSE_NEED, x, screen, sound):
+def game_running(PAUSE_NEED, x, screen, sound, type):
     GAME_SPEED = x
     PAUSE = 0
     if PAUSE_NEED:
@@ -130,7 +136,7 @@ def game_running(PAUSE_NEED, x, screen, sound):
     game_width = int(width // 2)
     i = 0
 
-    character = Player()
+    character = Player(type)
     player = pygame.sprite.GroupSingle()
     player.add(character)
 

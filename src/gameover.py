@@ -7,18 +7,18 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 WHITE = (255, 255, 255)
 
 
-background_image = pygame.image.load('src/assets/images/endingbackground.jpg')
+background_image = pygame.image.load('assets/images/endingbackground.jpg')
 background_image = pygame.transform.scale(background_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 
-play_image = pygame.image.load('src/assets/images/gameoverbutton.png')
-play_button_image = pygame.transform.scale(play_image, (300, 100))
+gameover = pygame.image.load('assets/images/gameover.png')
+gameoverimage = pygame.transform.scale(gameover, (575, 175))
+gameover_rect = gameoverimage.get_rect(center=(SCREEN_WIDTH // 2 , SCREEN_HEIGHT // 2 - 100))
 
-options_image = pygame.image.load('src/assets/images/playagainbutton.png')
-options_button_image = pygame.transform.scale(options_image, (200, 100))
+playagain = pygame.image.load('assets/images/playagainbutton.png')
+playagainimage = pygame.transform.scale(playagain, (200, 100))
 
-play_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 150, SCREEN_HEIGHT // 2 - 50, 320, 120)
-options_button_rect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 + 50 , 220, 120)
+playagainrect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2 , 320, 120)
 
 
 running = True
@@ -31,15 +31,13 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    if play_button_rect.collidepoint(mouse_pos):
-         screen.blit(pygame.transform.scale(play_image, (320, 120)), play_button_rect.move(-10, -5))
-    else:
-        screen.blit(play_button_image, play_button_rect)
 
-    if options_button_rect.collidepoint(mouse_pos):
-        screen.blit(pygame.transform.scale(options_image, (220, 120)), options_button_rect.move(-10, -5))
+    screen.blit(gameoverimage, gameover_rect)
+
+    if playagainrect.collidepoint(mouse_pos):
+        screen.blit(pygame.transform.scale(playagainimage, (220, 120)), playagainrect.move(-10, -5))
     else:
-        screen.blit(options_button_image, options_button_rect)
+        screen.blit(playagainimage, playagainrect)
 
     pygame.display.flip()
 

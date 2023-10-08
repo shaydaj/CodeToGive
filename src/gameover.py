@@ -1,30 +1,32 @@
 import pygame
 import sys
+import main
+
 
 pygame.init()
 SCREEN_WIDTH, SCREEN_HEIGHT = 960, 720
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 WHITE = (255, 255, 255)
 
-background_image = pygame.image.load("src/assets/images/endingbackground.jpg")
+background_image = pygame.image.load("assets/images/endingbackground.jpg")
 background_image = pygame.transform.scale(
     background_image, (SCREEN_WIDTH, SCREEN_HEIGHT)
 )
 
-gameover = pygame.image.load("src/assets/images/gameover.png")
+gameover = pygame.image.load("assets/images/gameover.png")
 gameoverimage = pygame.transform.scale(gameover, (575, 175))
 gameover_rect = gameoverimage.get_rect(
     center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 100)
 )
 
-playagain = pygame.image.load("src/assets/images/playagainbutton.png")
+playagain = pygame.image.load("assets/images/playagainbutton.png")
 playagainimage = pygame.transform.scale(playagain, (200, 100))
 
 playagainrect = pygame.Rect(SCREEN_WIDTH // 2 - 100, SCREEN_HEIGHT // 2, 320, 120)
 
 
 def new_screen():
-    pass
+    main.main()
 
 
 running = True

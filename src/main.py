@@ -74,9 +74,10 @@ def home_screen():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if settings_button_rect.collidepoint(event.pos):
                     show_settings_popup()
-            if event.type == pygame.MOUSEBUTTONDOWN:
                 if start_button_rect.collidepoint(event.pos):
-                    return
+                        selected_character = character_selection_popup()
+                        if selected_character is not None:
+                            return selected_character
 
         screen.blit(background, (0, 0))
         screen.blit(start_button_image, start_button_rect)
@@ -84,6 +85,83 @@ def home_screen():
 
 
         pygame.display.update()
+
+def character_selection_popup():
+
+    character_popup_border = pygame.Rect(
+        0.25 * DISPLAY_W, 0.25 * DISPLAY_H, 0.5 * DISPLAY_W, 0.6 * DISPLAY_H
+    )
+    character_popup_rect = pygame.Rect(
+        0.25 * DISPLAY_W + 5,
+        0.25 * DISPLAY_H + 5,
+        0.5 * DISPLAY_W - 10,
+        0.6 * DISPLAY_H - 10,
+    )
+
+    monkey_button_rect = pygame.Rect(
+            0.3 * DISPLAY_W,
+            0.4 * DISPLAY_H,
+            0.2 * DISPLAY_W,
+            0.1 * DISPLAY_H
+        )
+    rabbit_button_rect = pygame.Rect(
+            0.3 * DISPLAY_W,
+            0.6 * DISPLAY_H,
+            0.2 * DISPLAY_W,
+            0.1 * DISPLAY_H
+        )
+    
+    selected_character = None
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+    
+                if monkey_button_rect.collidepoint(event.pos):
+                    selected_character = 1
+                elif rabbit_button_rect.collidepoint(event.pos):
+                    selected_character = 2
+
+        if selected_character is not None:
+            return selected_character
+
+        pygame.draw.rect(screen, WHITE, character_popup_border)
+        pygame.draw.rect(screen, BLACK, character_popup_rect)
+
+        draw_text(
+            "Select Character",
+            28,
+            WHITE,
+            character_popup_rect.x + 25,
+            character_popup_rect.y + 20
+        )
+
+        pygame.draw.rect(screen, WHITE, monkey_button_rect)
+        draw_text(
+            "Monkey",
+            20,
+            BLACK,
+            monkey_button_rect.x + 25,
+            monkey_button_rect.y + 20
+        )
+
+        pygame.draw.rect(screen, WHITE, rabbit_button_rect)
+        draw_text(
+            "Rabbit",
+            20,
+            BLACK,
+            rabbit_button_rect.x + 40,
+            rabbit_button_rect.y + 20
+        )
+
+
+
+        pygame.display.update()
+
+
 
 
 def show_settings_popup():
@@ -211,7 +289,7 @@ def show_settings_popup():
         pygame.display.update()
 
 
-def game_screen():
+def game_screen(character):
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -222,12 +300,15 @@ def game_screen():
                     show_settings_popup()
 
         screen.fill(WHITE)
+
+        draw_text(f"Selected Character {character}", 30, BLACK, DISPLAY_W//2 - 300, DISPLAY_H//2)
+
         pygame.display.update()
 
 
 def main():
-    home_screen()
-    game_screen()
+    character = home_screen()
+    game_screen(character)
 
 
 if __name__ == "__main__":

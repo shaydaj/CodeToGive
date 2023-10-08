@@ -12,11 +12,11 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREY = (211, 211, 211)
 
-font = pygame.font.Font("assets/fonts/8-BIT WONDER.TTF", 30)
+font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", 30)
 
 PINK = (235,84,76)
 
-font = pygame.font.Font("assets/fonts/8-BIT WONDER.TTF", 30)
+font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", 30)
 
 
 # Set up display
@@ -51,7 +51,7 @@ slider_dragging = False
 def display_title():
 
     title_image = pygame.image.load(
-        "assets/images/gametitle.png"
+        "src/assets/images/gametitle.png"
     )  # Replace "path/to/your/title.png" with the actual file path
 
     scaled_title_image = pygame.transform.scale(title_image, (600, 225))
@@ -59,7 +59,7 @@ def display_title():
     screen.blit(scaled_title_image, title_rect)
 
 def draw_text(text, size, colour, x, y, return_rect=False):
-    font = pygame.font.Font("assets/fonts/8-BIT WONDER.TTF", size)
+    font = pygame.font.Font("src/assets/fonts/8-BIT WONDER.TTF", size)
     textobj = font.render(text, 1, colour)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
@@ -69,9 +69,9 @@ def draw_text(text, size, colour, x, y, return_rect=False):
 
 
 def home_screen():
-    background = pygame.image.load("assets/images/background2.jpg")
-    start_button_image = pygame.image.load("assets/images/startgamebutton.png")
-    settings_button_image = pygame.image.load("assets/images/optionsbutton.png")
+    background = pygame.image.load("src/assets/images/background2.jpg")
+    start_button_image = pygame.image.load("src/assets/images/startgamebutton.png")
+    settings_button_image = pygame.image.load("src/assets/images/optionsbutton.png")
     BUTTON_WIDTH = 250
     BUTTON_HEIGHT = 100
 
@@ -175,23 +175,23 @@ def character_selection_popup():
         pygame.draw.rect(screen, WHITE, character_popup_border)
         pygame.draw.rect(screen, PINK, character_popup_rect)
 
-        select_character_image = pygame.image.load('assets/images/players.jpeg')
+        select_character_image = pygame.image.load('src/assets/images/players.jpeg')
 
         screen.blit(select_character_image, (character_popup_rect.x + 120, character_popup_rect.y + 20))
 
-        gorilla_image = pygame.image.load('assets/images/gorilla.png')
+        gorilla_image = pygame.image.load('src/assets/images/gorilla.png')
         gorilla_image = pygame.transform.scale(gorilla_image, (200, 200))
         screen.blit(gorilla_image, (gorilla_button_rect.x, gorilla_button_rect.y))
 
-        rabbit_image = pygame.image.load('assets/images/rabbit.png')
+        rabbit_image = pygame.image.load('src/assets/images/rabbit.png')
         rabbit_image = pygame.transform.scale(rabbit_image, (450, 200))
         screen.blit(rabbit_image, (rabbit_button_rect.x, rabbit_button_rect.y))
 
-        cat_image = pygame.image.load('assets/images/cat.png')
+        cat_image = pygame.image.load('src/assets/images/cat.png')
         cat_image = pygame.transform.scale(cat_image, (350, 250))
         screen.blit(cat_image, (cat_button_rect.x, cat_button_rect.y))
 
-        duck_image = pygame.image.load('assets/images/duck.png')
+        duck_image = pygame.image.load('src/assets/images/duck.png')
         duck_image = pygame.transform.scale(duck_image, (350, 200))
         screen.blit(duck_image, (duck_button_rect.x, duck_button_rect.y))
 

@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
 
         self.player_walk = [player_walk_1, player_walk_2]
         self.player_index = 0
-        self.player_jump = scalePlayer("assets/images/gorilla-1.png")
+        self.player_jump = scalePlayer("src/assets/images/gorilla-1.png")
 
         self.image = self.player_walk[self.player_index]
         self.rect = self.image.get_rect(midbottom=(550, 500))
@@ -59,19 +59,19 @@ class Food(pygame.sprite.Sprite):
     def __init__(self, foodtype):
         super().__init__()
         if foodtype == 1:
-            banana_1 = scaleFood("assets/images/banana.png")
+            banana_1 = scaleFood("src/assets/images/banana.png")
             self.image = banana_1
 
         elif foodtype == 2:
-            banana_2 = scaleFood("assets/images/banana.png")
+            banana_2 = scaleFood("src/assets/images/banana.png")
             self.image = banana_2
 
         elif foodtype == 3:
-            banana_3 = scaleFood("assets/images/banana.png")
+            banana_3 = scaleFood("src/assets/images/banana.png")
             self.image = banana_3
 
         elif foodtype == 4:
-            banana_4 = scaleFood("assets/images/banana.png")
+            banana_4 = scaleFood("src/assets/images/banana.png")
             self.image = banana_4
 
         y_pos = 10
@@ -116,11 +116,11 @@ def game_running(PAUSE_NEED, x, screen, sound):
     if PAUSE_NEED:
         PAUSE = 2
     window = pygame.display.set_mode((width, height))
-    bg_img = pygame.image.load("assets/images/tower.png")
+    bg_img = pygame.image.load("src/assets/images/tower.png")
     bg_img = pygame.transform.scale(bg_img, (int(width // 2), height))
     beautiful_bg = [
-        "assets/images/Daylight skyline.png",
-        "assets/images/ny night 3.png",
+        "src/assets/images/Daylight skyline.png",
+        "src/assets/images/ny night 3.png",
     ]
     if not screen:
         bg_img1 = pygame.image.load(random.choice(beautiful_bg))
@@ -139,7 +139,7 @@ def game_running(PAUSE_NEED, x, screen, sound):
     food_timer = pygame.USEREVENT + 1
     running = True
 
-    pygame.mixer.music.load("assets/audios/chill.mp3")
+    pygame.mixer.music.load("src/assets/audios/chill.mp3")
 
     if sound:
         pygame.mixer.music.play(-1)
